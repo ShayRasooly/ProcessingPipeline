@@ -22,25 +22,22 @@ class Field:
     def __init__(self, name):
         self.name = name
 
-    def create_value(self, record: defaultdict):
+    def create_value(self, entry: defaultdict):
         pass
 
 
 class SubnetField(Field):
-    def __init__(self, name, subnet_class="A", relevant_address="srcip"):
+    def __init__(self, name, subnet_class, ip_key):
         super().__init__(name)
         self.subnet_class = subnet_class
-        self.relevant_address = relevant_address
+        self.ip_key = ip_key
 
-    def create_value(self, record: defaultdict):
-        return calc_subnet(record[self.relevant_address], self.subnet_class)
+    def create_value(self, entry: defaultdict):
+        return calc_subnet(entry[self.ip_key], self.subnet_class)
 
 
 class TimeField(Field):
-    def __init__(self, name):
-        super().__init__(name)
-
-    def create_value(self, record: defaultdict):
+    def create_value(self, entry: defaultdict):
         return get_iso_time_now()
 
 
@@ -62,7 +59,7 @@ class Enricher:
     def remove_field(self, name: str):
         self.fields = list(filter(lambda field: field.name != name, self.fields))
 
-    def enrich(self, records_list: list[defaultdict]):
-        for i, record in enumerate(records_list):
+    def enrich(self, entries_list: list[defaultdict]):
+        for i, entry in enumerate(entries_list):
             for field in self.fields:
-                records_list[i][field.name] = field.create_value(record)
+                entries_list[i][field.name] = field.create_value(entry)

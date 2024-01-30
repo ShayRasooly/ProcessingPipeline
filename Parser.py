@@ -3,9 +3,6 @@ import json
 
 
 class Parser:
-    def __init__(self):
-        pass
-
     def parse(self) -> list[defaultdict]:
         pass
 
@@ -13,7 +10,6 @@ class Parser:
 class JSONParser(Parser):
 
     def __init__(self, file_path):
-        super().__init__()
         self.file_path = file_path
 
     def parse(self) -> list[defaultdict]:
