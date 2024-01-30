@@ -6,7 +6,7 @@ class Parser:
     def __init__(self):
         pass
 
-    def parse(self) -> defaultdict:
+    def parse(self) -> list[defaultdict]:
         pass
 
 
@@ -16,8 +16,9 @@ class JSONParser(Parser):
         super().__init__()
         self.file_path = file_path
 
-    def parse(self):
-        data_dict = defaultdict(lambda: None)
+    def parse(self) -> list[defaultdict]:
         with open(self.file_path, 'r') as f:
-            data_dict.update(json.load(f)[0])
-        return data_dict
+            records_list = json.load(f)
+            for i, record in enumerate(records_list):
+                records_list[i] = defaultdict(lambda: None, record)
+        return records_list
