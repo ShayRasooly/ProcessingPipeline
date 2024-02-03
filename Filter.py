@@ -53,7 +53,7 @@ class Filter:
     def append_rule(self, rule: Rule):
         self.rules.append(rule)
 
-    def insert_rule(self, rule_name: str, rule: Rule, index: int):
+    def insert_rule(self, rule: Rule, index: int):
         self.rules.insert(index, rule)
 
     def remove_rule_by_name(self, rule_name: str):
